@@ -54,14 +54,13 @@ func (s *Scout) Report(title string) error {
 		}
 		buf = make([]byte, 2*len(buf))
 	}
-	stack := s.Prefix + string(buf[:n])
 	values := url.Values{
 		"ScoutUserName":       {s.UserName},
 		"ScoutProject":        {s.Project},
 		"ScoutArea":           {s.Area},
-		"Description":         {title},
+		"Description":         {s.Prefix + title},
 		"ForceNewBug":         {"0"},
-		"Extra":               {stack},
+		"Extra":               {string(buf[:n])}, // stack trace
 		"Email":               {s.Email},
 		"ScoutDefaultMessage": {s.ScoutDefaultMessage},
 		"FriendlyResponse":    {s.FriendlyResponse},
