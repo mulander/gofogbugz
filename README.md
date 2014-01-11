@@ -16,15 +16,17 @@ import (
 )
 
 func main() {
-	reporter := fogbugz.New("https://project.fogbugz.com/scoutsubmit.asp",
-		"ReporterUserName",
-		"MyProject",
-		"TelemetryArea",
-		"reporter@example.com",
-		"The occurrence of this problem has been noted. Thank you for using MyProject!",
-		"MyProject v1.0.1",
-		"1",
-	)
+	reporter := fogbugz.Scout{
+		URL : "https://project.fogbugz.com/scoutsubmit.asp",
+		UserName : "ReporterUserName",
+		Project: "MyProject",
+		Area: "TelemetryArea",
+		Email: "reporter@example.com",
+		ScoutDefaultMessage: "The occurrence of this problem has been noted. Thank you for using MyProject!",
+		Prefix: "MyProject v1.0.1 - ",
+		FriendlyResponse: "1",
+		Logger: nil, // call Init and use the default logger
+	}
 	fogbugz.Init(reporter)
 
 	file, err := os.Open("test.fogbugz")
