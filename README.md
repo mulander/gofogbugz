@@ -16,7 +16,7 @@ import (
 )
 
 func main() {
-	reporter := fogbugz.Scout{
+	reporter := &fogbugz.Scout{
 		URL : "https://project.fogbugz.com/scoutsubmit.asp",
 		UserName : "ReporterUserName",
 		Project: "MyProject",
@@ -33,6 +33,7 @@ func main() {
 	if err != nil {
 		fogbugz.Fatal(err)
 	}
+	defer file.Close()
 }
 
 ```
