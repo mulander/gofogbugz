@@ -16,22 +16,8 @@ type Scout struct {
 	Email               string
 	ScoutDefaultMessage string
 	FriendlyResponse    string
-	prefix              string
-	logger              *log.Logger
-}
-
-func New(url, user, project, area, email, scoutDefaultMessage, prefix, friendlyResponse string, l *log.Logger) *Scout {
-	return &Scout{
-		URL:                 url,
-		UserName:            user,
-		Project:             project,
-		Area:                area,
-		Email:               email,
-		ScoutDefaultMessage: scoutDefaultMessage,
-		FriendlyResponse:    friendlyResponse,
-		logger:              l,
-		prefix:              prefix,
-	}
+	Prefix              string
+	Logger              *log.Logger
 }
 
 func Init(s *Scout) {
@@ -46,11 +32,6 @@ func checkInit() {
 
 // Standard reporter
 var std *Scout = nil
-
-// Set output to the specified standard logger
-func (s *Scout) SetLogger(l *log.Logger) {
-	s.logger = l
-}
 
 // Report obtains a stack trace and reports
 // it to fogbugz.
@@ -73,7 +54,7 @@ func (s *Scout) Report(title string) error {
 		}
 		buf = make([]byte, 2*len(buf))
 	}
-	stack := s.prefix + string(buf[:n])
+	stack := s.Prefix + string(buf[:n])
 	values := url.Values{
 		"ScoutUserName":       {s.UserName},
 		"ScoutProject":        {s.Project},
@@ -97,7 +78,7 @@ func (s *Scout) Report(title string) error {
 // Sets the prefix for fogbugz bug reports.
 // Suggested value is the application version.
 func (s *Scout) SetPrefix(prefix string) {
-	s.prefix = prefix
+	s.Prefix = prefix
 }
 
 // Fatal is equivalent to l.Print() followed by
@@ -106,7 +87,7 @@ func (s *Scout) SetPrefix(prefix string) {
 func (s *Scout) Fatal(v ...interface{}) {
 	str := fmt.Sprint(v...)
 	s.Report(str)
-	s.logger.Fatal(str)
+	s.Logger.Fatal(str)
 }
 
 // Fatalf is equivalent to l.Printf() followed by
@@ -115,7 +96,7 @@ func (s *Scout) Fatal(v ...interface{}) {
 func (s *Scout) Fatalf(format string, v ...interface{}) {
 	str := fmt.Sprintf(format, v...)
 	s.Report(str)
-	s.logger.Fatal(str)
+	s.Logger.Fatal(str)
 }
 
 // Fatalln is equivalent to l.Println() followed by
@@ -124,7 +105,7 @@ func (s *Scout) Fatalf(format string, v ...interface{}) {
 func (s *Scout) Fatalln(v ...interface{}) {
 	str := fmt.Sprintln(v...)
 	s.Report(str)
-	s.logger.Fatal(str)
+	s.Logger.Fatal(str)
 }
 
 // Panic is equivalent to l.Print() followed by
@@ -133,7 +114,7 @@ func (s *Scout) Fatalln(v ...interface{}) {
 func (s *Scout) Panic(v ...interface{}) {
 	str := fmt.Sprint(v...)
 	s.Report(str)
-	s.logger.Panic(str)
+	s.Logger.Panic(str)
 }
 
 // Panicf is equivalent to l.Printf() followed by
@@ -142,7 +123,7 @@ func (s *Scout) Panic(v ...interface{}) {
 func (s *Scout) Panicf(format string, v ...interface{}) {
 	str := fmt.Sprintf(format, v...)
 	s.Report(str)
-	s.logger.Panic(str)
+	s.Logger.Panic(str)
 }
 
 // Panicln is equivalent to l.Println() followed by
@@ -151,7 +132,7 @@ func (s *Scout) Panicf(format string, v ...interface{}) {
 func (s *Scout) Panicln(v ...interface{}) {
 	str := fmt.Sprintln(v...)
 	s.Report(str)
-	s.logger.Panic(str)
+	s.Logger.Panic(str)
 }
 
 // Print calls l.Print to print to the logger.
@@ -160,7 +141,7 @@ func (s *Scout) Panicln(v ...interface{}) {
 func (s *Scout) Print(v ...interface{}) {
 	str := fmt.Sprint(v...)
 	s.Report(str)
-	s.logger.Print(str)
+	s.Logger.Print(str)
 }
 
 // Printf calls l.Printf to print to the logger.
@@ -169,7 +150,7 @@ func (s *Scout) Print(v ...interface{}) {
 func (s *Scout) Printf(format string, v ...interface{}) {
 	str := fmt.Sprintf(format, v...)
 	s.Report(str)
-	s.logger.Print(str)
+	s.Logger.Print(str)
 }
 
 // Println calls l.Println to print to the logger.
@@ -178,7 +159,7 @@ func (s *Scout) Printf(format string, v ...interface{}) {
 func (s *Scout) Println(format string, v ...interface{}) {
 	str := fmt.Sprintln(v...)
 	s.Report(str)
-	s.logger.Print(str)
+	s.Logger.Print(str)
 }
 
 // Standard reporter
