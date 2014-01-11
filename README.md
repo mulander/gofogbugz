@@ -10,7 +10,7 @@ usage
 package main
 
 import (
-  "os"
+	"os"
 
 	"github.com/mulander/fogbugz"
 )
@@ -32,4 +32,5 @@ func main() {
 		fogbugz.Fatal(err)
 	}
 }
+
 ```
