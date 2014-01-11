@@ -37,3 +37,10 @@ func main() {
 }
 
 ```
+
+output
+------
+
+Running the above code on a configured fogbugz instance will result in the following bug report
+
+![fogbugz bug report](http://i.imgur.com/BcfZoMq.png)
