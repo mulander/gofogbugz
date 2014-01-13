@@ -1,4 +1,4 @@
-package fogbugz
+package gofogbugz
 
 import (
 	"fmt"
@@ -26,7 +26,7 @@ func Init(s *Scout) {
 
 func checkInit() {
 	if std == nil {
-		panic("fogbugz: Call fogbugz.Init before using reporting")
+		panic("gofogbugz: Call gofogbugz.Init before using reporting")
 	}
 }
 
